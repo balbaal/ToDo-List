@@ -1,0 +1,183 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>todo list app</title>
+
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body{
+            background-color:#999CF2;
+        }
+
+        .wrap{
+            background-color: white;;
+            color: #999CF2;
+            /* margin: 0 auto; */
+            width: 350px;
+            height: 500px;
+            border-radius: 5px;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* border: 1px solid #999CF2; */
+        }
+
+        .todo_title{
+            font-weight: bold;
+            font-size: 30px;
+            font-family: 'Gloria Hallelujah', cursive;
+            /* text-decoration: underline; */
+        }
+
+        .btn-primary{
+            background-color: #F6F6FF;
+            border: 0px;
+            color: #999CF2;
+            font-weight: bold;
+            font-size: 25px;
+            padding: 2px 8px 2px 8px;
+        }
+
+        .btn-primary:hover{
+            background-color: #999CF2;
+            color: #F6F6FF;
+        }
+
+        .btn-danger{
+            background-color: #F6F6FF;
+            border: 0px;
+            color: #999CF2;
+            font-weight: bold;
+            font-size: 25px;
+            padding: 2px 8px 2px 8px;
+        }
+
+        .btn-danger:hover{
+            background-color: #F6F6FF;
+            color: pink;
+        }
+
+        .item_todo{
+            background-color: #f6f6f6;
+            border-radius: 5px;
+            padding: 10px;  
+            height: 80px;
+            font-weight: bold;
+            font-size: 18px;
+            width: 260px;
+            margin: 0 auto;
+            margin-bottom: 10px;
+            font-family: 'Gloria Hallelujah', cursive;
+
+        }
+
+        .item_center{
+            margin-top: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="wrap">
+            <div class="row" style="padding: 20px;">
+                <div class="col-md-8">
+                    <p class="todo_title">ToDo List</p>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal" href="#">+</a>
+                </div>
+            </div>
+
+            <div class="row" style="padding: 20px;">
+                <div id="list-todo">
+                    <!-- <div class="item_todo">
+                        <div class="item_center">
+                            <div class="col-md-8">
+                                    <p>listtt</p>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="btn btn-danger pull-right" href="#" style="margin-top:-10px; margin-right: -10px;">x</a>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>    
+</body>
+</html>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add ToDo</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="text" class="form-control" id="todo-input">
+            </div>
+        </div>
+        <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="addTodo()" data-dismiss="modal">Submit</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- template -->
+<div style="visibility: hidden" id="item-template">
+    <div class="item_todo">
+        <div id="item-index" class="item_center">
+            <div class="col-md-8">
+                    <p id="todo_input_data">listtt</p>
+            </div>
+            <div class="col-md-4">
+                <a class="btn btn-danger pull-right" onclick="" href="#" style="margin-top:-10px; margin-right: -10px;">x</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function addTodo(){
+        count_item = $("#list-todo .item_todo").length;
+        if(count_item > 3){
+            alert("Item ToDo List Overload !")
+        }else{
+            todo_input = $("#todo-input").val();
+            $("#item-template #todo_input_data").text(todo_input);
+            
+            $("#item-template a").attr("onclick", "deleteTodo("+count_item+")");
+            console.log(count_item)
+
+            $("#item-template .item_todo").attr("id", "item_"+count_item);
+
+            $("#list-todo").append($("#item-template").html());
+
+            $("#todo-input").val("");
+        }
+
+    }
+
+    function deleteTodo(index){
+        $("#item_"+index).remove();
+    }
+</script>
